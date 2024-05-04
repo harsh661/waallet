@@ -1,6 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --R: 150px;
+}
 
 :root,
 html,
@@ -9,6 +15,115 @@ body {
 }
 
 body {
-  background: #131316;
+  background: #000;
+  /* background: -webkit-linear-gradient(0deg, #18181d 60%, #25242c 100%);
+  background: linear-gradient(0deg, #18181d 60%, #25242c 100%); */
   color: #ffffff;
+}
+
+.container {
+  background: black;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.container:after {
+  content: '';
+  width: 100%;
+  height: 100vh;
+  background: url('https://i.imgur.com/PsjPzdO.png');
+  background-size: 200px;
+  mix-blend-mode: overlay;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.blobs {
+  width: 50vh;
+  height: 40vh;
+  display: block;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.blob {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  position: absolute;
+  background-color: #FF4D00;
+  mix-blend-mode: multiply;
+  filter: blur(80px);
+}
+
+.blob.a {
+  background-color: #FF4D00;
+  background-color: rgba(255, 77, 0, 0.8);
+  animation: circular2 40s linear infinite;
+}
+
+.blob.b {
+  background-color: #FF4D00;
+  background-color: rgba(255, 77, 0, 0.5);
+  animation: circular 20s linear infinite;
+}
+
+.blob.c {
+  animation: circular 30s linear infinite;
+}
+
+@keyframes circular {
+  0% {
+      transform: translate(0, calc(var(--R) * -1));
+  }
+  25% {
+      transform: translate(calc(var(--R)), 0);
+  }
+  50% {
+      transform: translate(0, var(--R));
+  }
+  75% {
+      transform: translate(calc(var(--R) * -1), 0);
+  }
+  100% {
+      transform: translate(0, calc(var(--R) * -1));
+  }
+}
+
+@keyframes circular2 {
+  0% {
+      transform: translate(0, var(--R));
+  }
+  25% {
+      transform: translate(calc(var(--R) * -1), 0);
+  }
+  50% {
+      transform: translate(0, calc(var(--R) * -1));
+  }
+  75% {
+      transform: translate(var(--R), 0);
+  }
+  100% {
+      transform: translate(0, var(--R));
+  }
+}
+
+
+.mono-font {
+  font-family: "Roboto Mono", monospace;
+}
+
+#underline {
+  position: relative;
+}
+#underline::after {
+  content: url("/underline.svg");
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
 }

@@ -19,11 +19,11 @@ const config = {
     },
     extend: {
       colors: {
-        'gray-500': '#13119',
-        'gray-300': '#202020',
-        'gray-100': '#323232',
-        'primary-blue': '#7d6ef4',
-        'primary-yellow': '#ffee57',
+        'gray-500': '#18181d',
+        'gray-300': '#25242c',
+        'gray-100': '#222228',
+        'accent-green': '#76fa77',
+        'accent-blue': '#7d6ef4',
       },
       keyframes: {
         "accordion-down": {
