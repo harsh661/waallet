@@ -19,14 +19,18 @@ const Navbar = () => {
         <li className='text-white/50 hover:text-white p-1'><Link href='/'>Resources</Link></li>
       </ul>
       <div className='flex flex-1 items-center justify-end gap-8'>
-        {isSignedIn ? <UserButton /> : <>
-          < Link href='/sign-in'>
-            <Button size="lg" variant="outline">Sign in</Button>
+        {isSignedIn ?
+          < Link href='/dashboard'>
+            <Button size="lg">Dashboard</Button>
           </Link>
-          <Link href='/sign-up'>
-            <Button size="lg">Sign up</Button>
-          </Link>
-        </>}
+          : <>
+            < Link href='/sign-in'>
+              <Button size="lg" variant="outline">Sign in</Button>
+            </Link>
+            <Link href='/sign-up'>
+              <Button size="lg">Sign up</Button>
+            </Link>
+          </>}
       </div >
     </div >
   )
