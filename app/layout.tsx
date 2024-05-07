@@ -17,7 +17,44 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
+    <ClerkProvider appearance={{
+      baseTheme: dark,
+      elements: {
+        // cardBox: {
+        //   boxShadow: "none",
+        // },
+        formButtonPrimary: {
+          backgroundColor: "#76fa77",
+          color: "black",
+          boxShadow: "none !important",
+          padding: "10px",
+          fontSize: "14px",
+          "&:hover": {
+            backgroundColor: "#76fa77e6"
+          }
+        },
+        buttonArrowIcon: {
+          display: "none"
+        },
+        input: {
+          padding: "10px",
+          fontSize: "14px",
+          backgroundColor: "#18181d",
+        },
+        button: {
+          padding: "10px",
+          fontSize: "14px",
+        },
+        footer: {
+          background: "transparent",
+        }
+      },
+      variables: {
+        colorText: "#fafafa",
+        colorBackground: "black",
+
+      }
+    }}>
       <html lang="en">
         <body className={font.className}>{children}</body>
       </html>

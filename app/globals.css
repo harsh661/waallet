@@ -112,7 +112,6 @@ body {
   }
 }
 
-
 .mono-font {
   font-family: "Roboto Mono", monospace;
 }
@@ -126,4 +125,8 @@ body {
   bottom: -20px;
   left: 0;
   right: 0;
+}
+
+.cl-internal-180wb59 {
+  display: none;
 }

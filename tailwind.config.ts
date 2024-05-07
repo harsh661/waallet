@@ -19,9 +19,7 @@ const config = {
     },
     extend: {
       colors: {
-        'gray-500': '#18181d',
-        'gray-300': '#25242c',
-        'gray-100': '#222228',
+        'off-black': '#171717',
         'accent-green': '#76fa77',
         'accent-blue': '#7d6ef4',
       },
