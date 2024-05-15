@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { RootProvider } from "@/components/providers/rootprovider";
 
 const font = Inter({ subsets: ["latin"], weight: ['400', '500', '600', '700'] });
 
@@ -56,7 +57,11 @@ export default function RootLayout({
       }
     }}>
       <html lang="en">
-        <body className={font.className}>{children}</body>
+        <body className={font.className}>
+          <RootProvider>
+            {children}
+          </RootProvider>
+        </body>
       </html>
     </ClerkProvider>
   );

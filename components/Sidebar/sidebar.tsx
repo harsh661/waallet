@@ -46,7 +46,7 @@ const Sidebar = () => {
       </div>
 
       <div className='mt-auto'>
-        <div className='flex gap-2'>
+        <div className='flex items-center gap-2'>
           <UserButton appearance={{
             elements: {
               userButtonTrigger: {

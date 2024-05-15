@@ -10,6 +10,7 @@ import { CreateTransactionSchema, CreateTransactionSchemaType } from '@/schema/t
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { ReactNode } from 'react'
 import { useForm } from 'react-hook-form';
+import CategoryPicker from './CategoryPicker';
 
 interface IncomeDialogProps {
     trigger: ReactNode
@@ -46,7 +47,7 @@ const AddIncomeDialog: React.FC<IncomeDialogProps> = ({ trigger, type }) => {
                                 <FormItem>
                                     <FormLabel>Amount</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter the amount" {...field} />
+                                        <Input type='number' placeholder="Enter the amount" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -55,11 +56,25 @@ const AddIncomeDialog: React.FC<IncomeDialogProps> = ({ trigger, type }) => {
                         <FormField
                             control={form.control}
                             name="description"
+                            defaultValue=''
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="category"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Category</FormLabel>
+                                    <FormControl>
+                                        <CategoryPicker type={type} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
