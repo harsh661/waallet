@@ -8,9 +8,12 @@ import { TransactionType } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { CreateTransactionSchema, CreateTransactionSchemaType } from '@/schema/transactions';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useCallback } from 'react'
 import { useForm } from 'react-hook-form';
 import CategoryPicker from './CategoryPicker';
+import DatePicker from './DatePicker';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CreateTransaction } from '../_actions/transaction';
 
 interface IncomeDialogProps {
     trigger: ReactNode
@@ -26,9 +29,21 @@ const AddIncomeDialog: React.FC<IncomeDialogProps> = ({ trigger, type }) => {
         }
     })
 
-    const onSubmit = (data: CreateTransactionSchemaType) => {
-        console.log(data)
-    }
+    const queryClient = useQueryClient()
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: CreateTransaction,
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: ["transaction"]
+            })
+            console.log('Transaction Created')
+        }
+    })
+
+    const onSubmit = useCallback((data: CreateTransactionSchemaType) => {
+        mutate(data);
+    }, [mutate])
 
     return (
         <Dialog>
@@ -67,22 +82,38 @@ const AddIncomeDialog: React.FC<IncomeDialogProps> = ({ trigger, type }) => {
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="category"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Category</FormLabel>
-                                    <FormControl>
-                                        <CategoryPicker type={type} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        <div className='grid grid-cols-2 gap-5'>
+                            <FormField
+                                control={form.control}
+                                name="category"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Category</FormLabel>
+                                        <FormControl>
+                                            <CategoryPicker type={type} form={form} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="date"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Date</FormLabel>
+                                        <FormControl>
+                                            <DatePicker />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
                         <Button
                             type="submit"
                             variant="secondary"
+                            disabled={isPending}
                         >
                             Save
                         </Button>

@@ -10,10 +10,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SquarePlus } from 'lucide-react';
 import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import EmojiPicker, { Categories } from 'emoji-picker-react';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data'
-import { Theme } from 'emoji-picker-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CreateCategory } from '../_actions/categories';
 import { Category } from '@prisma/client';
