@@ -130,3 +130,7 @@ body {
 .cl-internal-180wb59 {
   display: none;
 }
+
+text {
+  fill: white !important;
+}
