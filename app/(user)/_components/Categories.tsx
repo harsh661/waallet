@@ -41,7 +41,7 @@ const Categories = ({ from, to }: { from: Date, to: Date }) => {
 
             {/* Chart for expense breakdown */}
             <div className='border border-neutral-800 bg-neutral-950 rounded-lg p-3 lg:p-5 flex-1 h-96'>
-                <h2>Income breakdown</h2>
+                <h2>Expense breakdown</h2>
                 {overviewQuery.isLoading ? <div></div>
                     : <PieChart
                         colors={[

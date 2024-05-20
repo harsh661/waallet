@@ -8,7 +8,7 @@ import { TransactionType } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { CreateTransactionSchema, CreateTransactionSchemaType } from '@/schema/transactions';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { ReactNode, useCallback } from 'react'
+import React, { ReactNode, useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import CategoryPicker from './CategoryPicker';
 import DatePicker from './DatePicker';
@@ -21,6 +21,8 @@ interface IncomeDialogProps {
 }
 
 const AddIncomeDialog: React.FC<IncomeDialogProps> = ({ trigger, type }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
     const form = useForm<CreateTransactionSchemaType>({
         resolver: zodResolver(CreateTransactionSchema),
         defaultValues: {
@@ -34,10 +36,12 @@ const AddIncomeDialog: React.FC<IncomeDialogProps> = ({ trigger, type }) => {
     const { mutate, isPending } = useMutation({
         mutationFn: CreateTransaction,
         onSuccess: async () => {
-            await queryClient.invalidateQueries({
-                queryKey: ["transaction"]
-            })
-            console.log('Transaction Created')
+            await Promise.all([
+                queryClient.invalidateQueries({ queryKey: ["overview"] }),
+                queryClient.invalidateQueries({ queryKey: ["category"] })
+            ]);
+            form.reset();
+            setIsOpen(false);
         }
     })
 
@@ -46,8 +50,8 @@ const AddIncomeDialog: React.FC<IncomeDialogProps> = ({ trigger, type }) => {
     }, [mutate])
 
     return (
-        <Dialog>
-            <DialogTrigger asChild>{trigger}</DialogTrigger>
+        <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+            <DialogTrigger onClick={() => setIsOpen(true)} asChild>{trigger}</DialogTrigger>
             <DialogContent className='border-white/10 outline-none'>
                 <DialogHeader>
                     <DialogTitle>Create a new Transaction <span className={cn('px-2 py-[2px] ml-1 rounded-md text-sm', type === 'expense' ? 'text-red-500 bg-red-500/20' : 'text-emerald-500 bg-emerald-500/20')}>{type}</span></DialogTitle>
