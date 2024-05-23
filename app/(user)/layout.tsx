@@ -9,7 +9,7 @@ export default function UserLayout({
     return (
         <section className="flex h-full">
             <Sidebar />
-            <main className="flex-grow">
+            <main className="flex-grow overflow-auto">
                 {children}
             </main>
         </section>
