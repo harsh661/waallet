@@ -44,8 +44,8 @@ export function TransactionTable({ heading, limit }: { heading: string, limit?: 
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {!transactionsQuery.isLoading && displayedTransactions?.map((transaction, index) => (
-                        <TableRow key={index}>
+                    {!transactionsQuery.isLoading && displayedTransactions?.map((transaction) => (
+                        <TableRow key={transaction.id}>
                             <TableCell className="font-medium">{transaction.category}</TableCell>
                             <TableCell>{transaction.type}</TableCell>
                             <TableCell>{new Date(transaction.date).toLocaleDateString()}</TableCell>
@@ -54,7 +54,7 @@ export function TransactionTable({ heading, limit }: { heading: string, limit?: 
                         </TableRow>
                     ))}
                     {/* Show skeleton if data is loading */}
-                    {transactionsQuery.isLoading && [0, 1, 2, 3, 4].map((item) => (
+                    {transactionsQuery.isLoading && [0, 1, 2, 3, 4].map(() => (
                         <TableRow>
                             {[0, 1, 2, 3, 4].map((_, index) => (
                                 <TableCell key={index} className="font-medium">
@@ -64,7 +64,7 @@ export function TransactionTable({ heading, limit }: { heading: string, limit?: 
                         </TableRow>
                     ))}
                 </TableBody>
-                {limit && !transactionsQuery.isLoading && (
+                {limit && (
                     <TableCaption onClick={() => router.push('/transactions')} className="py-2 px-4 cursor-pointer w-max hover:!text-accent-blue">
                         Show more
                     </TableCaption>

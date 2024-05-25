@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import AddIncomeDialog from '../_components/AddIncomeDialog'
 import Categories from './Categories'
 import { TransactionTable } from '@/components/TransactionTable/transaction-table'
+import TransactionChart from '@/components/TransactionTable/transaction-chart'
 
 const Overview = () => {
     const [range, setRange] = useState({
@@ -43,6 +44,7 @@ const Overview = () => {
             </div>
             <Categories from={range.from} to={range.to} />
             <TransactionTable heading='Recent Transactions' limit={5} />
+            <TransactionChart />
         </main>
     )
 }
