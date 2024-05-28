@@ -6,28 +6,32 @@ import {
     TableBody,
     TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
 import { useQuery } from "@tanstack/react-query"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { Pagination, PaginationContent, PaginationItem, PaginationEllipsis, PaginationLink, PaginationNext, PaginationPrevious } from "../ui/pagination"
 
 export function TransactionTable({ heading, limit }: { heading: string, limit?: number }) {
+    const [page, setPage] = useState(1);
+
     const transactionsQuery = useQuery<TransactionHistoryResponseType>({
-        queryKey: ["overview"],
-        queryFn: () => fetch(`/api/transactions`).then((res) => res.json())
+        queryKey: ["overview", page, limit],
+        queryFn: () => fetch(`/api/transactions?page=${page}&limit=${limit}`).then((res) => res.json())
     })
 
-    const router = useRouter();
+    let displayedTransactions = transactionsQuery.data?.transactions;
 
-    let displayedTransactions = transactionsQuery.data;
+    // Pagination functions
+    const handlePrevious = () => {
+        setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
+    }
 
-    if (limit && Array.isArray(transactionsQuery.data)) {
-        displayedTransactions = transactionsQuery.data.slice(0, limit);
+    const handleNext = () => {
+        setPage((prevPage) => (prevPage + 1));
     }
 
     return (
@@ -64,11 +68,29 @@ export function TransactionTable({ heading, limit }: { heading: string, limit?: 
                         </TableRow>
                     ))}
                 </TableBody>
-                {limit && (
-                    <TableCaption onClick={() => router.push('/transactions')} className="py-2 px-4 cursor-pointer w-max hover:!text-accent-blue">
-                        Show more
-                    </TableCaption>
-                )}
+                <TableCaption>
+                    <Pagination className="w-full">
+                        <PaginationContent>
+                            <PaginationItem>
+                                <PaginationPrevious onClick={handlePrevious} />
+                            </PaginationItem>
+                            <PaginationItem>
+                                {Array.from({ length: transactionsQuery.data?.totalPages as number }, (_, i) => i + 1).map((pageNo) => (
+                                    <PaginationLink
+                                        onClick={() => setPage(pageNo)}
+                                        className={page === pageNo ? 'bg-neutral-100 text-neutral-950' : ''}
+                                    >{pageNo}</PaginationLink>
+                                ))}
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationNext onClick={handleNext} />
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </TableCaption>
             </Table>
         </>
     )
