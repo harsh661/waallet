@@ -30,7 +30,7 @@ export async function GET(request: Request) {
 
 export type OverviewStatsResponseType = Awaited<ReturnType<typeof getOverviewStats>>;
 
-export async function getOverviewStats(userId: string, from: Date, to: Date) {
+async function getOverviewStats(userId: string, from: Date, to: Date) {
   const totals = await prisma.transaction.groupBy({
     by: ["type"],
     where: {

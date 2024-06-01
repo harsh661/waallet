@@ -23,7 +23,7 @@ export type TransactionHistoryResponseType = Awaited<
   ReturnType<typeof getTransactionHistory>
 >;
 
-export async function getTransactionHistory(userId: string, page: number, limit: number) {
+async function getTransactionHistory(userId: string, page: number, limit: number) {
   const offset = (page - 1) * limit;
 
   const transactions = await prisma.transaction.groupBy({

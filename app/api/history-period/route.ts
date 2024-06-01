@@ -17,7 +17,7 @@ export type HistoryPeriodResponseType = Awaited<
   ReturnType<typeof getHistoryPeriod>
 >;
 
-export async function getHistoryPeriod(userId: string) {
+async function getHistoryPeriod(userId: string) {
   const result = await prisma.monthHistory.findMany({
     where: {
       userId,

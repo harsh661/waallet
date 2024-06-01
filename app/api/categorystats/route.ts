@@ -32,7 +32,7 @@ export type CategoryStatsResponseType = Awaited<
   ReturnType<typeof getCategoryStats>
 >;
 
-export async function getCategoryStats(userId: string, from: Date, to: Date) {
+async function getCategoryStats(userId: string, from: Date, to: Date) {
   const stats = await prisma.transaction.groupBy({
     by: ["type", "category"],
     where: {
