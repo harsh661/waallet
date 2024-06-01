@@ -58,8 +58,8 @@ export function TransactionTable({ heading, limit }: { heading: string, limit?: 
                         </TableRow>
                     ))}
                     {/* Show skeleton if data is loading */}
-                    {transactionsQuery.isLoading && [0, 1, 2, 3, 4].map(() => (
-                        <TableRow>
+                    {transactionsQuery.isLoading && [0, 1, 2, 3, 4].map((i) => (
+                        <TableRow key={i}>
                             {[0, 1, 2, 3, 4].map((_, index) => (
                                 <TableCell key={index} className="font-medium">
                                     <div className={cn("w-1/2 bg-neutral-800 text-transparent rounded-sm animate-pulse", index === 4 && 'last:ml-auto')}>I</div>
@@ -77,6 +77,7 @@ export function TransactionTable({ heading, limit }: { heading: string, limit?: 
                             <PaginationItem>
                                 {Array.from({ length: transactionsQuery.data?.totalPages as number }, (_, i) => i + 1).map((pageNo) => (
                                     <PaginationLink
+                                        key={pageNo}
                                         onClick={() => setPage(pageNo)}
                                         className={page === pageNo ? 'bg-neutral-100 text-neutral-950' : ''}
                                     >{pageNo}</PaginationLink>
