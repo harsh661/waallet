@@ -6,12 +6,12 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/client"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url = env("POSTGRESS_PRISMA_URL")
+  directUrl = env("POSTGRESS_URL_NON_POOLING")
 }
 
 model Category {
