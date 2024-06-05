@@ -5,14 +5,21 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import { useQuery } from '@tanstack/react-query';
 import { CategoryStatsResponseType } from '@/app/api/categorystats/route';
 
+type overviewQueryData = {
+    id: number;
+    value: number;
+    label: string;
+    type: string;
+}
+
 const Categories = ({ from, to }: { from: Date, to: Date }) => {
     const overviewQuery = useQuery<CategoryStatsResponseType>({
         queryKey: ["category", "overview", from, to],
         queryFn: () => fetch(`/api/categorystats?from=${from}&to=${to}`).then((res) => res.json())
     })
 
-    const incomes = overviewQuery.data?.filter(t => t.type === "income")
-    const expenses = overviewQuery.data?.filter(t => t.type === "expense")
+    const incomes = overviewQuery.data?.filter((t: overviewQueryData) => t.type === "income")
+    const expenses = overviewQuery.data?.filter((t: overviewQueryData) => t.type === "expense")
 
     return (
         <div className='py-10 w-full flex md:space-x-5 lg:space-x-8'>
